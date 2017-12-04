@@ -36,7 +36,7 @@ def sizeof_fmt(num, suffix='B'):
     return "%.1f%s%s" % (num, 'Yi', suffix)
 
 def upload_callback(current, total):
-    print('({}, {})'.format(sizeof_fmt(current), TOTAL_BACKUP_SIZE))
+    print('({}, {})'.format(sizeof_fmt(current), total))
 
 # Stack Helper
 def slack_message(success=True, duration=0, deleted=[]):
@@ -119,7 +119,8 @@ try:
     end = time.time()
     duration = int(end - start)
     slack_message(success=True, duration=duration, deleted=files_to_delete)
-except:
+except Exception as e:
+    print(e)
     end = time.time()
     duration = int(end - start)
     slack_message(success=False, duration=duration, deleted=[])
